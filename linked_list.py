@@ -90,6 +90,36 @@ class LinkedList:
             count += 1
             itr = itr.next
 
+    def insert_at_index(self, index, data):
+        """
+        Insert "data" at given "index"
+        :param index:
+        :param data:
+        :return:
+        """
+
+        # Check if given index is valid or not
+        if index < 0 or index > self.calc_length():
+            raise "Invalid index"
+
+        # Implementations with valid index
+        if index == 0:
+            self.insert_at_beginning(data)
+            return
+
+        if index == self.calc_length() + 1:
+            self.insert_at_end(data)
+            return
+
+        count = 0
+        itr = self.head
+        while itr:
+            if count == index - 1:
+                node = Node(data, itr.next)
+                itr.next = node
+            itr = itr.next
+            count += 1
+
     def print(self):
         """
         Method to print contents of "Linked List" object
@@ -126,10 +156,17 @@ if __name__ == "__main__":
     fruits = ["Apple", "Mango", "Banana"]
     ll.insert_values_from_list(fruits)
     ll.print()  # Apple-->Mango-->Banana-->
-    # --- Calculate lenght of Linked List ---
+    # --- Calculate length of Linked List ---
     print(f"Length of Linked List: {ll.calc_length()}")
     # --- Removing items from given index
     ll.remove_at_index(1)
     ll.print()  # Apple-->Banana-->
     ll.remove_at_index(0)
     ll.print()  # Banana-->
+    # --- Add items at given index ---
+    ll.insert_at_index(1, "Papaya")
+    ll.print()  # Banana-->Papaya-->
+    ll.insert_at_index(2, "Jackfruit")
+    ll.print()  # Banana-->Papaya-->Jackfruit-->
+    ll.insert_at_index(1, "Grapes")
+    ll.print()  # Banana-->Grapes-->Papaya-->Jackfruit-->
