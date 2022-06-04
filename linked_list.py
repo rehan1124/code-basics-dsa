@@ -43,11 +43,20 @@ class LinkedList:
         itr.next = Node(data, None)
 
     def insert_values_from_list(self, data_list):
+        """
+        Insert values from given list to Linked List
+        :param data_list:
+        :return:
+        """
         self.head = None
         for items in data_list:
             self.insert_at_end(items)
 
     def calc_length(self):
+        """
+        Calculate length of Linked List
+        :return:
+        """
         if self.head is None:
             print("Linked List is empty")
             return
@@ -60,7 +69,11 @@ class LinkedList:
         return count
 
     def remove_at_index(self, index):
-
+        """
+        Remove item from given index
+        :param index:
+        :return:
+        """
         if index < 0 or index >= self.calc_length():
             raise "Invalid index"
 
