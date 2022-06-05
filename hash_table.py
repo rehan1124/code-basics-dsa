@@ -32,7 +32,7 @@ class HashMap:
             h += ord(chars)
         return h % self.MAX
 
-    def add_to_hash(self, key, value):
+    def __setitem__(self, key, value):
         """
         Add "value" based on given get_hash(key)
         :param key:
@@ -42,7 +42,7 @@ class HashMap:
         k1 = self.get_hash(key)
         self.hash_arr[k1] = value
 
-    def get_from_hash(self, key):
+    def __getitem__(self, key):
         """
         Retrieve value from Hash-table based on given "key"
         :param key:
@@ -50,6 +50,10 @@ class HashMap:
         """
         k1 = self.get_hash(key)
         return self.hash_arr[k1]
+
+    def __delitem__(self, key):
+        k1 = self.get_hash(key)
+        self.hash_arr[k1] = None
 
 
 if __name__ == "__main__":
@@ -61,6 +65,11 @@ if __name__ == "__main__":
     hm = HashMap()
     # print(hm.get_hash("Afsha"))  # 83
 
-    hm.add_to_hash("Rehan", 33)
-    print(hm.get_from_hash("Rehan"))
-    print(hm.get_from_hash("Rizwan"))
+    hm["Rehan"] = 33  # Calls __setitem__ method
+    print(hm["Rehan"])  # 33. Calls __getitem__ method
+    hm["Shareka"] = 32  # Calls __setitem__ method
+    hm["Rizwan"] = 31
+    hm["Afsha"] = 22
+    del hm["Rehan"]  # Calls __delitem__
+    print(hm["Rehan"])  # None
+    print(hm.hash_arr)
