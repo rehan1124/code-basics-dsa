@@ -1,5 +1,6 @@
 """
 Hash-table or Hash-map
+Implemented chaining for collision handling
 """
 
 
@@ -19,7 +20,7 @@ def get_hash(key):
 class HashMap:
     def __init__(self):
         self.MAX = 100
-        self.hash_arr = [None for i in range(self.MAX)]
+        self.hash_arr = [[] for i in range(self.MAX)]
 
     def get_hash(self, key):
         """
@@ -40,7 +41,16 @@ class HashMap:
         :return:
         """
         k1 = self.get_hash(key)
-        self.hash_arr[k1] = value
+        # print(key, k1)
+
+        found = False
+        for idx, items in enumerate(self.hash_arr[k1]):
+            if len(items) == 2 and items[0] == key:
+                self.hash_arr[k1][idx] = (key, value)
+                found = True
+                break
+        if not found:
+            self.hash_arr[k1].append((key, value))
 
     def __getitem__(self, key):
         """
@@ -49,17 +59,21 @@ class HashMap:
         :return:
         """
         k1 = self.get_hash(key)
-        return self.hash_arr[k1]
+        for items in self.hash_arr[k1]:
+            if items[0] == key:
+                return items[1]
 
     def __delitem__(self, key):
         k1 = self.get_hash(key)
-        self.hash_arr[k1] = None
+        for idx, items in enumerate(self.hash_arr[k1]):
+            if items[0] == key:
+                del self.hash_arr[k1][idx]
 
 
 if __name__ == "__main__":
     # --- Examples to calculate hash value ---
     # print(get_hash("Rehan"))
-    # print(get_hash("Shareka"))
+    # print(get_hash("Naher"))
 
     # --- Hash-map or Hash-table ---
     hm = HashMap()
@@ -72,4 +86,14 @@ if __name__ == "__main__":
     hm["Afsha"] = 22
     del hm["Rehan"]  # Calls __delitem__
     print(hm["Rehan"])  # None
-    print(hm.hash_arr)
+    print(f"Hash-map: {hm.hash_arr}")
+    # --- Collision handling ---
+    hm["Rehan"] = 33
+    hm["Naher"] = 333
+    # print(hm["Rehan"])
+    # print(hm["Naher"])
+    print(f"Hash-map: {hm.hash_arr}")
+    print(f"Rehan: {hm['Rehan']}")
+    print(f"Naher: {hm['Naher']}")
+    del hm["Naher"]
+    print(f"Hash-map: {hm.hash_arr}")
