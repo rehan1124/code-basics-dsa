@@ -7,6 +7,7 @@
 - Stack
 - Queue
 - Tree
+![img.png](tree.png)
 - Graph
 - Searching and Sorting
 
