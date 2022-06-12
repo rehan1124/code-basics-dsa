@@ -27,7 +27,7 @@ class BinaryTree:
         self.data = data
         self.left = None
         self.right = None
-        print(f"Creating BinaryTree node with data: {data}")
+        # print(f"Creating BinaryTree node with data: {data}")
 
     def add_child(self, data):
         """
@@ -36,31 +36,31 @@ class BinaryTree:
         :return:
         """
         if data == self.data:
-            print(f"data {data}, self.data {self.data} are same")
+            # print(f"data {data}, self.data {self.data} are same")
             # Check if data to be added is same as present node data
             return
 
         if data < self.data:
-            print(f"data {data} < self.data {self.data}")
+            # print(f"data {data} < self.data {self.data}")
             # Check if data to be added is smaller than present node data
             if self.left is None:
-                print(f"self.left is None. Add BinaryTree node with data {data}.")
+                # print(f"self.left is None. Add BinaryTree node with data {data}.")
                 # Add only if left of parent node is None
                 self.left = BinaryTree(data)
             else:
                 # If left of parent node is not None, make recursive calls
-                print(f"self.left is not None. Recursively call add_Child.")
+                # print(f"self.left is not None. Recursively call add_Child.")
                 self.left.add_child(data)
         else:
-            print(f"data {data} > self.data {self.data}")
+            # print(f"data {data} > self.data {self.data}")
             # Check if data to be added is larger than present node data
             if self.right is None:
-                print(f"self.right is None. Add BinaryTree node with data {data}.")
+                # print(f"self.right is None. Add BinaryTree node with data {data}.")
                 # Add only if right of parent node is None
                 self.right = BinaryTree(data)
             else:
                 # If right of parent node is not None, make recursive calls
-                print(f"self.right is not None. Recursively call add_Child.")
+                # print(f"self.right is not None. Recursively call add_Child.")
                 self.right.add_child(data)
 
     def in_order_traversal(self):
@@ -69,21 +69,31 @@ class BinaryTree:
 
         # Visit left binary tree nodes
         if self.left:
-            print(f"self.left is present.")
-            print(f"elements {elements}.")
+            # print(f"self.left is present.")
+            # print(f"elements {elements}.")
             elements += self.left.in_order_traversal()
 
         # Visit base node
         elements.append(self.data)
-        print(f"Parent node elements {elements}.")
+        # print(f"Parent node elements {elements}.")
 
         # Visit left binary tree nodes
         if self.right:
-            print(f"self.right is present.")
-            print(f"elements {elements}.")
+            # print(f"self.right is present.")
+            # print(f"elements {elements}.")
             elements += self.right.in_order_traversal()
 
         return elements
+
+    def find_max(self):
+        if self.right is None:
+            return self.data
+        return self.right.find_max()
+
+    def find_min(self):
+        if self.left is None:
+            return self.data
+        return self.left.find_min()
 
     def is_present(self, data):
         if self.data == data:
@@ -114,9 +124,14 @@ def build_tree(l1):
 if __name__ == "__main__":
     sample_list = [17, 4, 1, 20, 9, 23, 18, 34]
     bt = build_tree(sample_list)
-    print(bt)
-    print(bt.in_order_traversal())  # [1, 4, 9, 17, 18, 20, 23, 34]
-    print(bt.is_present(101))  # False
-    print(bt.is_present(9))  # True
-    print(bt.is_present(18))  # True
-    print(bt.is_present(100))  # False
+    # print(bt)
+    print(f"Root node: {bt.data}")
+    print(f"Left of root node: {bt.left.data}, Right of root node: {bt.right.data}")
+    # --- Perform In-order traversal to get the elements sorted from Binary Search Tree
+    print(f"In-order traversal: {bt.in_order_traversal()}")  # [1, 4, 9, 17, 18, 20, 23, 34]
+    print(f"Is 101 present: {bt.is_present(101)}")  # False
+    print(f"Is 9 present: {bt.is_present(9)}")  # True
+    print(f"Is 18 present: {bt.is_present(18)}")  # True
+    print(f"Is 100 present: {bt.is_present(100)}")  # False
+    # --- Find minimum and maximum nodes
+    print(f"Min: {bt.find_min()}, Max: {bt.find_max()}")
