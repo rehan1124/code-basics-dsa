@@ -111,6 +111,9 @@ class BinaryTree:
             else:
                 return False
 
+    def delete_from_bt(self, data):
+        pass
+
 
 def build_tree(l1):
     root = BinaryTree(l1[0])
