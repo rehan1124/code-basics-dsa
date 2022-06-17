@@ -28,6 +28,31 @@ class Graph:
             else:
                 self.graph_dict[i].append(j)
 
+    def get_paths(self, source, destination, path=None):
+        # Create a list to store multiple paths
+        if path is None:
+            path = []
+        # Keep appending the paths as function is called
+        # Use re-assignment for 'path'. Dont do 'path += [source]'(In-place addition).
+        path = path + [source]
+
+        # When source and destination city are same
+        if source == destination:
+            return [path]
+
+        # When there is no flight between source and destination
+        if source not in self.graph_dict:
+            return []
+
+        final_paths = []
+        for city in self.graph_dict[source]:
+            if city not in path:
+                new_path = self.get_paths(city, destination, path)
+                for p in new_path:
+                    final_paths.append(p)
+
+        return final_paths
+
     def __str__(self):
         return str(self.graph_dict)
 
@@ -43,4 +68,11 @@ if __name__ == "__main__":
     ]
 
     g1 = Graph(routes)
-    print(g1)
+    # --- Get all routes ---
+    print(g1)  # {'Mumbai': ['Paris', 'Dubai'], 'Paris': ['Dubai', 'New York'],\
+    # 'Dubai': ['New York'], 'New York': ['Toronto']}
+
+    # --- Start and end is same ---
+    start = "Mumbai"
+    end = "New York"
+    print(f"Paths between {start} and {end}: {g1.get_paths(start, end)}")
