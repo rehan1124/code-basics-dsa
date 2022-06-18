@@ -105,4 +105,4 @@ if __name__ == "__main__":
 
     # --- Get shortest path ---
     print(f"Shortest path between {start} and {end}: {g1.get_shortest_path(start, end)}")
-    # ['Mumbai', 'Dubai', 'New York']
+    # ['Mumbai', 'Paris', 'New York']
