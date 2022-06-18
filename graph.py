@@ -53,6 +53,31 @@ class Graph:
 
         return final_paths
 
+    def get_shortest_path(self, source, destination, path=None):
+        if path is None:
+            path = []
+        path = path + [source]
+
+        # When no flights from given source city
+        if source not in self.graph_dict:
+            return None
+
+        # When source and destination city are same
+        if source == destination:
+            return path
+
+        final_shortest_path = None
+        for node in self.graph_dict[source]:
+            if node not in path:
+                calculated_shortest_path = self.get_shortest_path(node, destination, path)
+                if calculated_shortest_path:
+                    if final_shortest_path is None or len(calculated_shortest_path) < len(final_shortest_path):
+                        final_shortest_path = calculated_shortest_path
+
+        return final_shortest_path
+
+        # return sorted(self.get_paths(source, destination))[0]
+
     def __str__(self):
         return str(self.graph_dict)
 
@@ -76,3 +101,8 @@ if __name__ == "__main__":
     start = "Mumbai"
     end = "New York"
     print(f"Paths between {start} and {end}: {g1.get_paths(start, end)}")
+    # [['Mumbai', 'Paris', 'Dubai', 'New York'], ['Mumbai', 'Paris', 'New York'], ['Mumbai', 'Dubai', 'New York']]
+
+    # --- Get shortest path ---
+    print(f"Shortest path between {start} and {end}: {g1.get_shortest_path(start, end)}")
+    # ['Mumbai', 'Dubai', 'New York']
