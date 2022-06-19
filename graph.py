@@ -71,7 +71,7 @@ class Graph:
             if node not in path:
                 calculated_shortest_path = self.get_shortest_path(node, destination, path)
                 if calculated_shortest_path:
-                    if final_shortest_path is None or len(calculated_shortest_path) < len(final_shortest_path):
+                    if final_shortest_path is None or len(calculated_shortest_path) <= len(final_shortest_path):
                         final_shortest_path = calculated_shortest_path
 
         return final_shortest_path
