@@ -53,7 +53,7 @@ def recursive_binary_search(number_list, search_number, left_index, right_index)
 
     mid_index = (left_index + right_index) // 2
     mid_number = number_list[mid_index]
-    
+
     if mid_index > len(number_list):
         return -1
 
