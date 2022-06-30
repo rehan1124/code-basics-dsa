@@ -29,4 +29,4 @@ if __name__ == "__main__":
     sample_list = [5, 9, 2, 1, 67, 34, 88, 34]
     # sample_list = [1, 2, 4]
     bs = bubble_sort(sample_list)
-    print(f"Bubble sorted list: {bs}")
+    print(f"Bubble sorted list: {bs}")  # Bubble sorted list: [1, 2, 5, 9, 34, 34, 67, 88]
